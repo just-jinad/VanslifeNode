@@ -1,14 +1,25 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
+const mongoose= require('mongoose')
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+const cors = require('cors')
+const env = require("dotenv").config()
+const allRoutes = require("./Routes/vans.route")
+URI = process.env.URI
 app.get('/', (req, res) => res.send('Hello World!'))
 
-
+app.use(bodyParser.json());
+mongoose.connect(URI)
+.then(()=>{
+    console.log("Db has been connected successfully");
+}).catch((err)=>{
+    console.log(err);
+})
 // const express = require('express');
 // const app = express();
 // const PORT = process.env.PORT || 3000;
-const cors = require('cors')
 
 app.use(cors())
 
@@ -36,7 +47,7 @@ app.get('/api/vans/:id', (req, res) => {
 });
 
 app.get('/api/host/vans', (req, res) => {
-
+    
     const hostVans = vans.filter(van => van.hostId === '123');
     res.send(hostVans);
 });
@@ -55,4 +66,6 @@ app.get('/api/host/vans/:id', (req, res) => {
 // app.listen(PORT, () => {
 //     console.log(`Server is running on port ${PORT}`);
 // });
+
+app.use("/van", allRoutes)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -9,5 +9,6 @@ let vanSchema=mongoose.Schema({
     password:{type:String, required: true}
 })
 
+
 let vanModel = mongoose.model("vansDatabase", vanSchema)
 module.exports = vanModel

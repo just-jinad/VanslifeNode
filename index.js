@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const port = 3000
 const mongoose= require('mongoose')
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -8,6 +7,7 @@ const cors = require('cors')
 const env = require("dotenv").config()
 const allRoutes = require("./Routes/vans.route")
 URI = process.env.URI
+port = process.env.port || 3000;
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.use(bodyParser.json());
@@ -19,7 +19,6 @@ mongoose.connect(URI)
 })
 // const express = require('express');
 // const app = express();
-// const PORT = process.env.PORT || 3000;
 
 app.use(cors())
 
